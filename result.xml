@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="0" failures="2" skipped="0" tests="7" time="0.146" timestamp="2024-07-10T15:14:48.522054" hostname="DESKTOP-L9SMQ18"><testcase classname="test_multiplication" name="test_multiplication_11[1-11]" time="0.001" /><testcase classname="test_multiplication" name="test_multiplication_11[2-22]" time="0.002" /><testcase classname="test_multiplication" name="test_multiplication_11[3-35]" time="0.002"><failure message="assert (11 * 3) == 35">num = 3, output = 35
+
+    @pytest.mark.parametrize("num, output",[(1,11),(2,22),(3,35),(4,44)])
+    def test_multiplication_11(num, output):
+&gt;      assert 11*num == output
+E      assert (11 * 3) == 35
+
+test_multiplication.py:5: AssertionError</failure></testcase><testcase classname="test_multiplication" name="test_multiplication_11[4-44]" time="0.002" /><testcase classname="test_multiplication" name="test_division_6[36]" time="0.002" /><testcase classname="test_multiplication" name="test_division_6[18]" time="0.001" /><testcase classname="test_multiplication" name="test_division_6[16]" time="0.001"><failure message="assert (16 % 6) == 0">number = 16
+
+    @pytest.mark.parametrize("number",  [36, 18, 16])
+    def test_division_6(number):
+&gt;      assert number % 6 == 0
+E      assert (16 % 6) == 0
+
+test_multiplication.py:9: AssertionError</failure></testcase></testsuite></testsuites>
