@@ -17,3 +17,12 @@ def pytest_generate_tests(metafunc):
       else:
          end = 2
       metafunc.parametrize("param1", range(end))
+
+
+import pytest
+import os
+
+@pytest.fixture(scope="session")
+def subfolders():
+    base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+    return [f for f in os.listdir(base_dir) if os.path.isdir(os.path.join(base_dir, f))]

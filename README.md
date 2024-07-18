@@ -29,10 +29,43 @@ Add decorator to fixture function
 @pytest.fixture
 def input_value()
 ```
-and insert the fixture function name as a parameter of the function. According to example:
+Fixture function should have a return value
+
+And insert the fixture function name as a parameter of the function. According to example:
 ```
 def test_<>(input_value)
 ```
+Return value of fixture function will be the parameter of test function
+
+## Fixtures can request other fixtures
+
+```
+# contents of test_append.py
+import pytest
+
+
+# Arrange
+@pytest.fixture
+def first_entry():
+    return "a"
+
+
+# Arrange
+@pytest.fixture
+def order(first_entry):
+    return [first_entry]
+
+
+def test_string(order):
+    # Act
+    order.append("b")
+
+    # Assert
+    assert order == ["a", "b"]
+```
+
+## More than one fixture at a time
+
 
 # Conftest
 You can define the fixture function in another file named contest.py
@@ -78,6 +111,32 @@ def pytest_generate_tests(metafunc):
 * pytest_generate_tests checks if __param1__ is a fixture in the test function and sets the range of values for param1 
     * if --all option is selected -> __param1 = 5__ and test_compute tests in the range 5 -> 1 failure
     * else -> __param1 = 2__ and test_compute tests in range 2 -> no failure
+
+##  parameter provided by the user
+__'pytest_addoption'__ hook allows to add a command-line option that the user can specify
+```
+import pytest
+
+def pytest_addoption(parser):
+    parser.addoption("--user-param", action="store", help="User provided parameter")
+
+@pytest.fixture
+def user_param(request):
+    return request.config.getoption("--user-param")
+
+# Example test using the command-line option
+def test_example(user_param):
+    assert user_param == "expected_value"
+```
+
+to run the test use
+```
+pytest test_file.py --user-param="some_value"
+```
+
+
+
+
 
 # Xfail/Skip Tests
 To execute the xfailed test, but it will not be considered as part failed or passed tests
